@@ -2,7 +2,8 @@
 
 #include <cmath>
 
-namespace MatLib {
+namespace MatLib
+{
 
 typedef std::chrono::high_resolution_clock::time_point Time_Point;
 

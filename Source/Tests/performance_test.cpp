@@ -1,11 +1,14 @@
 #include <iostream>
 
-#include "System/Clock.h"
-#include "Container/Linked_List.h"
-#include "Container/Vector.h"
-#include "Container/Forward_List.h"
+#include <vector>
+#include <list>
+#include <forward_list>
 
-#include "Memory/Unique_Pointer.h"
+#include "../System/Clock.h"
+#include "../Container/Linked_List.h"
+#include "../Container/Vector.h"
+
+#include "../Memory/Unique_Pointer.h"
 
 
 //Test Class
@@ -25,13 +28,43 @@ struct Vertex
                     << " Y: " << y
                     << " Z: " << z << std::endl << std::endl;
     }
+
+    void stuff() { }
 };
 
-size_t TRIALS = 230;
-size_t ELEMENTS = 2'147'000;
+size_t TRIALS = 100;
+size_t ELEMENTS = 100'000;
 
+/*
+ * This will test not only performance, but also the functionality of the containers eg if their
+ * "rule of 6" works.
+ */
 template <typename T>
 void testContainerTime ( const std::string& which )
+{
+    MatLib::Clock clock;
+    for ( size_t i = 0 ; i < TRIALS ; i++ )
+    {
+        T t;
+        for ( size_t e = 0 ; e < ELEMENTS ; e++ )
+        {
+            t.emplace_back( i, i, i );
+        }
+        T t2 = t;
+        t.clear();
+        t2[ t2.size() / 2 ];
+        t2.clear();
+    }
+    double time = clock.getElapsedTime();
+
+    std::cout   << "Time for " << which << " Container: " << time
+                << std::endl;
+    std::cout   << "With " << TRIALS << " trials and " << ELEMENTS << " elements, this makes the average time for a trial: "
+                << time / TRIALS << std::endl << std::endl;
+}
+
+
+void startTimeTest()
 {
     std::cout   << std::endl
                 << "This is trial that will create a container, emplace "
@@ -41,33 +74,12 @@ void testContainerTime ( const std::string& which )
                 << " times."
                 << std::endl;
 
-    MatLib::Clock clock;
-    for ( size_t i = 0 ; i < TRIALS ; i++ )
-    {
-        T t;
-        for ( size_t e = 0 ; e < ELEMENTS ; e++ )
-        {
-            t.emplace_back( i, i, i );
-            //t[i];
-        }
-        t.clear();
-    }
-    double time = clock.getElapsedTime();
-
-    std::cout   << "Time for " << which << " Container: " << time << std::endl;
-    std::cout   << "With " << TRIALS << " trials and " << ELEMENTS << " elements, this makes the average time for a trial: "
-                << time / TRIALS << std::endl;
-}
-
-
-int main()
-{
     testContainerTime<MatLib::Vector<Vertex>>       ( "MatLib::Vector" );
     testContainerTime<MatLib::Linked_List<Vertex>>  ( "MatLib::Linked_List" );
-    testContainerTime<MatLib::Forward_List<Vertex>> ( "MatLib::Forward_List" );
+
+    testContainerTime<std::vector<Vertex>>          ( "std::vector" );
 
     std::cout << "Finished. Press anything to exit." << std::endl;
     std::cin.ignore();
 
-    return 0;
 }

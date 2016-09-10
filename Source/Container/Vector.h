@@ -16,6 +16,45 @@ class Vector
                 m_p_data = (T*) malloc ( sizeof ( T ) * m_maxSize );
         }
 
+        Vector ( Vector&& other ) //Move constructor
+        :   m_maxSize   ( other.m_maxSize )
+        ,   m_size      ( other.m_size )
+        ,   m_p_data    ( other.m_p_data )
+        {
+            other.m_p_data  = nullptr;
+            other.m_size    = 0;
+            other.m_maxSize = 0;
+        }
+
+
+        Vector& operator =(Vector&& other ) //Move assignment
+        {
+            m_p_data    ( other.m_p_data );
+            m_maxSize   ( other.m_maxSize );
+            m_size      ( other.m_size );
+
+            other.m_p_data  = nullptr;
+            other.m_size    = 0;
+            other.m_maxSize = 0;
+
+            return *this;
+        }
+
+        Vector ( Vector& other )  //Copy constructor
+        {
+            *this = other;//Uses the copy assignment for this class
+        }
+
+        Vector& operator =( Vector& other )   //Copy assignment
+        {
+            clear();
+            for ( size_t i = 0 ; i < other.size() ; i++ )
+            {
+                push_back( other[i] );
+            }
+            return *this;
+        }
+
         ~Vector()
         {
             clear();
@@ -32,6 +71,7 @@ class Vector
 
             m_p_data = nullptr;
             m_maxSize = 0;
+            m_size = 0;
         }
 
         void push_back( T& data )
@@ -42,14 +82,14 @@ class Vector
         }
 
         template<typename... Args>
-        void emplace_back ( Args... args )
+        void emplace_back ( Args&&... args )
         {
             if ( m_size >= m_maxSize) doubleSize();
             new ( m_p_data + m_size ) T ( std::forward<Args>(args)... );
             m_size++;
         }
 
-        size_t size ()
+        size_t size () const
         {
             return m_size;
         }
@@ -82,8 +122,9 @@ class Vector
         }
 
 
-        size_t  m_size      = 0;
+
         size_t  m_maxSize   = 0;
+        size_t  m_size      = 0;
 
         T*      m_p_data    = nullptr;
 };

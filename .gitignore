@@ -10,3 +10,7 @@
 # generated directories
 bin/
 obj/
+
+#Custom
+
+wip/
