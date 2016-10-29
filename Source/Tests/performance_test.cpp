@@ -10,7 +10,7 @@
 
 #include "../Memory/Unique_Pointer.h"
 
-
+/*
 //Test Class
 struct Vertex
 {
@@ -31,14 +31,16 @@ struct Vertex
 
     void stuff() { }
 };
-
+*/
 size_t TRIALS = 100;
-size_t ELEMENTS = 100'000;
+size_t ELEMENTS = 1000000;
 
 /*
  * This will test not only performance, but also the functionality of the containers eg if their
  * "rule of 6" works.
  */
+
+ /*
 template <typename T>
 void testContainerTime ( const std::string& which )
 {
@@ -62,8 +64,8 @@ void testContainerTime ( const std::string& which )
     std::cout   << "With " << TRIALS << " trials and " << ELEMENTS << " elements, this makes the average time for a trial: "
                 << time / TRIALS << std::endl << std::endl;
 }
-
-
+*/
+/*
 void startTimeTest()
 {
     std::cout   << std::endl
@@ -83,3 +85,4 @@ void startTimeTest()
     std::cin.ignore();
 
 }
+*/

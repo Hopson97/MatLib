@@ -8,23 +8,23 @@ namespace MatLib
     {
         public:
             //Copy constructor and copy assignment are not allowed
-            Unique_Pointer  ( const Unique_Pointer& other ) = delete;
-            void operator = ( Unique_Pointer& other ) = delete;
+            Unique_Pointer  (const Unique_Pointer& other) = delete;
+            void operator = (Unique_Pointer& other) = delete;
 
             Unique_Pointer() = default;
 
-            Unique_Pointer ( Unique_Pointer&& other )
+            Unique_Pointer (Unique_Pointer&& other)
             {
                 m_pointer  = other.m_pointer;
                 other.m_pointer = nullptr;
             }
 
-            Unique_Pointer( T* obj )
+            Unique_Pointer(T* obj)
             {
                 m_pointer = obj;
             }
 
-            void operator = ( Unique_Pointer&& other )
+            void operator = (Unique_Pointer&& other)
             {
                 m_pointer = other.m_pointer;
                 other.m_pointer = nullptr;
@@ -55,12 +55,13 @@ namespace MatLib
             {
                 return m_pointer;
             }
+
         private:
             T* m_pointer = nullptr;
     };
 
     template <typename T, typename... Args>
-    Unique_Pointer<T> make_unique( Args&&... args)
+    Unique_Pointer<T> makeUnique( Args&&... args)
     {
         return Unique_Pointer<T>( new T ( std::forward<Args>( args )...) );
     }

@@ -19,8 +19,8 @@ class Linked_List
         Node*   next = nullptr;
 
         template<typename... Args>
-        Node ( Args&&... data )
-        :   data ( std::forward<Args>(data)... )
+        Node (Args&&... data)
+        :   data (std::forward<Args>(data)...)
         { }
     };
 
@@ -29,10 +29,10 @@ class Linked_List
         Linked_List () = default;
 
         //Move constructor
-        Linked_List ( Linked_List&& other )
-        : m_first   ( other.m_first )
-        , m_last    ( other.m_last  )
-        , m_count   ( other.m_count )
+        Linked_List (Linked_List&& other)
+        : m_first   (other.m_first)
+        , m_last    (other.m_last)
+        , m_count   (other.m_count)
         {
             other.m_first = nullptr;
             other.m_last = nullptr;
@@ -40,13 +40,13 @@ class Linked_List
         }
 
         //Copy constructor
-        Linked_List ( Linked_List& other )
+        Linked_List (Linked_List& other)
         {
             *this = other; //Uses the copy assignment for this class
         }
 
         //Copy assignment
-        Linked_List& operator= ( Linked_List& other )
+        Linked_List& operator= (Linked_List& other)
         {
             clear();
 
@@ -63,7 +63,7 @@ class Linked_List
         }
 
         //Move assignment
-        Linked_List& operator= ( Linked_List&& other )
+        Linked_List& operator= (Linked_List&& other)
         {
             clear();
 
@@ -85,18 +85,18 @@ class Linked_List
 
         void clear ()
         {
-            while ( !empty() ) erase( 0 );
+            while (!empty()) erase(0);
         }
 
-        void erase ( const size_t where )
+        void erase (const size_t where)
         {
-            Node* conductor = get_to_node( where);
+            Node* conductor = getToNode( where);
 
             if ( where == 0 )
             {
                 Node* temp = conductor;
                 m_first = temp->next;
-                decrease_node_count();
+                decreaseNodeCount();
                 delete temp;
                 return;
             }
@@ -104,7 +104,7 @@ class Linked_List
             {
                 Node* temp = conductor;
                 m_last = temp->prev;
-                decrease_node_count();
+                decreaseNodeCount();
                 delete temp;
                 return;
             }
@@ -112,48 +112,48 @@ class Linked_List
             if ( conductor->prev ) conductor->prev->next = conductor->next;
 
             delete conductor;
-            decrease_node_count();
+            decreaseNodeCount();
         }
 
-        void push_back ( T& data )
+        void pushBack (T& data)
         {
-            Node* node = new Node( data );
+            Node* node = new Node(data);
 
-            if ( try_insert_if_empty( node ) ) return;
+            if (try_insert_if_empty(node)) return;
 
             m_last->next = node;
             node->prev = m_last;
             m_last = node;
 
-            increase_node_count();
+            increaseNodeCount();
         }
 
         template <typename... Args>
-        void emplace_back ( Args&&... data )
+        void emplaceBack ( Args&&... data )
         {
             Node* node = new Node( std::forward<Args>(data)... );
 
-            if ( try_insert_if_empty( node ) ) return;
+            if (try_insert_if_empty( node ) ) return;
 
             m_last->next = node;
             node->prev = m_last;
             m_last = node;
 
-            increase_node_count();
+            increaseNodeCount();
         }
 
         template <typename... Args>
-        void emplace_front ( Args&&... data )
+        void emplaceFront (Args&&... data)
         {
             Node* node = new Node( std::forward<Args>(data)... );
 
-            if ( try_insert_if_empty( node ) ) return;
+            if ( tryInsertIfEmpty(node)) return;
 
             m_first->prev = node;
             node->next = m_first;
             m_first = node;
 
-            increase_node_count();
+            increaseNodeCount();
         }
 
         bool empty ()
@@ -163,7 +163,7 @@ class Linked_List
 
         T&  operator [] ( const size_t where )
         {
-            Node* conductor = get_to_node( where );
+            Node* conductor = getToNode( where );
 
             return conductor->data;
         }
@@ -180,7 +180,7 @@ class Linked_List
 
         const T& operator [] ( const size_t where ) const
         {
-            Node* conductor = get_to_node( where );
+            Node* conductor = getToNode( where );
 
             return conductor->data;
         }
@@ -201,9 +201,9 @@ class Linked_List
         }
 
     private:
-        bool try_insert_if_empty ( Node* node )
+        bool tryInsertIfEmpty (Node* node)
         {
-            if ( empty() )
+            if (empty())
             {
                 m_first = node;
                 m_last = node;
@@ -213,24 +213,24 @@ class Linked_List
             return false;
         }
 
-        void increase_node_count ()
+        void increaseNodeCount ()
         {
             m_count++;
         }
 
-        void decrease_node_count ()
+        void decreaseNodeCount ()
         {
             m_count--;
         }
 
-        Node* get_to_node ( size_t where )
+        Node* getToNode (size_t where)
         {
             Node* conductor = nullptr;
 
-            if ( where <= m_count / 2 )
+            if (where <= m_count / 2)
             {
                 conductor = m_first;
-                for ( size_t i = 0 ; i < where ; i ++ )
+                for (size_t i = 0 ; i < where ; i ++)
                 {
                     conductor = conductor->next;
                 }
@@ -239,7 +239,7 @@ class Linked_List
             {
                 where = m_count - where;
                 conductor = m_last;
-                for ( size_t i = 0 ; i < where - 1 ; i ++ )
+                for (size_t i = 0 ; i < where - 1 ; i ++)
                 {
                     conductor = conductor->prev;
                 }

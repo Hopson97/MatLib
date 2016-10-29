@@ -13,7 +13,7 @@ class Clock
     public:
         Clock();
         void reset();
-        double getElapsedTime() const;;
+        double getElapsedTime() const;
 
     private:
         Time_Point getTimeNow() const;
