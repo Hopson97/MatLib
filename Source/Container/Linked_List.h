@@ -46,7 +46,7 @@ class Linked_List
         }
 
         //Copy assignment
-        Linked_List& operator= (Linked_List& other)
+        Linked_List& operator= (const Linked_List& other)
         {
             clear();
 
@@ -115,7 +115,7 @@ class Linked_List
             decreaseNodeCount();
         }
 
-        void pushBack (T& data)
+        void addToBack (T& data)
         {
             Node* node = new Node(data);
 
@@ -129,7 +129,7 @@ class Linked_List
         }
 
         template <typename... Args>
-        void emplaceBack ( Args&&... data )
+        void addToBack ( Args&&... data )
         {
             Node* node = new Node( std::forward<Args>(data)... );
 
@@ -143,7 +143,7 @@ class Linked_List
         }
 
         template <typename... Args>
-        void emplaceFront (Args&&... data)
+        void addToFront (Args&&... data)
         {
             Node* node = new Node( std::forward<Args>(data)... );
 

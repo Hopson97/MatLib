@@ -1,23 +1,23 @@
 #include "Tests/performance_test.h"
 
 #include "Memory/Shared_Pointer.h"
-
+#include "Utilities/Function.h"
+#include "Memory/Unique_Pointer.h"
+#include "Container/Vector.h"
 #include <iostream>
+#include <String.h>
+#include <vector>
 
-struct Test_Object
+
+
+void test()
 {
-    Test_Object()
-    {
-        std::cout << "CREATED" << std::endl;
-    }
-
-    ~Test_Object()
-    {
-        std::cout << "DESTROYED" << std::endl;
-    }
-};
+    std::cout << "f" << std::endl;
+}
 
 int main()
 {
-    MatLib::Shared_Pointer<Test_Object> obj = MatLib::makeShared<Test_Object>();
+    MatLib::Function<void(void)> function(&test);
+    function();
+
 }

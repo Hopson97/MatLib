@@ -29,10 +29,12 @@ namespace MatLib
                 return m_pointer;
             }
 
-            void operator =(Shared_Pointer other)
+            Shared_Pointer& operator =(Shared_Pointer other)
             {
                 testForDel();
                 m_refCount = other.m_refCount;
+
+                return *this;
             }
 
             T& operator *()
