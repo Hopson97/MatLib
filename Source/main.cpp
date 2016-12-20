@@ -1,9 +1,8 @@
-#include "Container/Binary_Tree.h"
 #include "Container/Linked_List.h"
-
-#include <iostream>
+#include "Container/Vector.h"
+#include "Container/Tree_Map.h"
 
 int main()
 {
-
+    MatLib::Tree_Map<int, int> i;
 }

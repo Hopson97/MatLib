@@ -6,20 +6,22 @@ namespace MatLib
 template<typename T>
 class Vector
 {
+    using Pointer = T*;
+
     public:
         Vector () = default;
 
         Vector (size_t initialSize)
-        :   m_maxSize (initialSize)
+        :   m_maxSize   ( initialSize)
         {
-            if ( !m_maxSize == 0 )
-                m_p_data = (T*) malloc (sizeof(T) * m_maxSize);
+            if (!m_maxSize == 0)
+                m_p_data = (Pointer) malloc (sizeof(T) * m_maxSize);
         }
 
         Vector ( Vector&& other ) //Move constructor
-        :   m_maxSize   (other.m_maxSize)
-        ,   m_size      (other.m_size)
-        ,   m_p_data    (other.m_p_data)
+        :   m_maxSize   (other.m_maxSize )
+        ,   m_size      (other.m_size )
+        ,   m_p_data    (other.m_p_data )
         {
             other.m_p_data  = nullptr;
             other.m_size    = 0;
@@ -27,7 +29,7 @@ class Vector
         }
 
 
-        Vector& operator =(Vector&& other) //Move assignment
+        Vector& operator =(Vector&& other ) //Move assignment
         {
             m_p_data    (other.m_p_data);
             m_maxSize   (other.m_maxSize);
@@ -40,7 +42,7 @@ class Vector
             return *this;
         }
 
-        Vector (Vector& other)  //Copy constructor
+        Vector ( Vector& other )  //Copy constructor
         {
             *this = other;//Uses the copy assignment for this class
         }
@@ -64,7 +66,7 @@ class Vector
         {
             for (size_t i = 0 ; i < m_size ; i++)
             {
-                m_p_data[i].~T();
+                m_p_data[i]->~T();
             }
             if (m_p_data)
                 free(m_p_data);
@@ -117,13 +119,13 @@ class Vector
     private:
         void doubleSize()
         {
-            if (m_size == 0) m_maxSize = 1;
+            if ( m_size == 0 ) m_maxSize = 1;
             else
             {
                 m_maxSize *= 2;
             }
 
-            T* newArray = (T*) malloc (sizeof(T) * m_maxSize);
+            Pointer newArray = (T*) malloc (sizeof(T) * m_maxSize);
 
             for (size_t i = 0 ; i < m_size ; i++)
             {
@@ -141,7 +143,7 @@ class Vector
         size_t  m_maxSize   = 0;
         size_t  m_size      = 0;
 
-        T** m_p_data = nullptr;
+        Pointer* m_p_data = nullptr;
 };
 
 

@@ -19,7 +19,7 @@ namespace MatLib
         return m_string;
     }
 
-std::ostream& operator<<(std::ostream& stream, const String& str)
+    std::ostream& operator<<(std::ostream& stream, const String& str)
     {
         stream << str.data();
         return stream;
