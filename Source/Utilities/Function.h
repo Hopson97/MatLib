@@ -15,7 +15,14 @@ namespace MatLib
             Function(Func func)
             :   m_function(func)
             { }
+/*
+            template<typename T>
+            Function(Ret(T::*func)(Args...), T& obj)
+            :   m_function (func)
+            {
 
+            }
+*/
             Ret operator()()
             {
                 return m_function();
@@ -23,7 +30,9 @@ namespace MatLib
 
         private:
             Func m_function;
+
     };
+
 
 }
 

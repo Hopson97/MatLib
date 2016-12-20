@@ -8,17 +8,20 @@ namespace MatLib
         return *this;
     }
 
-    String::String(const char* str)
-    :   m_string ()
+    String::String(char* str)
+    :   m_string (str)
     {
 
     }
 
-
-    void String::operator<<(std::ostream& stream)
+    const char* String::data() const
     {
-        stream << *m_string;
+        return m_string;
     }
 
-
+std::ostream& operator<<(std::ostream& stream, const String& str)
+    {
+        stream << str.data();
+        return stream;
+    }
 }

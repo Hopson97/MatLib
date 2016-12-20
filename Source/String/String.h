@@ -5,24 +5,21 @@
 
 namespace MatLib
 {
+    class String
+    {
+        public:
+            String() = default;
+            String(char* str);
 
-class String
-{
-    public:
-        String() = default;
-        String(const char* str);
+            String& operator= (const String& other);
 
-        String& operator= (const String& other);
+            const char* data() const;
 
-        void operator << (std::ostream& stream);
+        private:
+            char* m_string;
+    };
 
-
-    protected:
-
-    private:
-        char* m_string;
-};
-
+    std::ostream& operator<<(std::ostream& stream, const String& str);
 }
 
 #endif // STRING_H

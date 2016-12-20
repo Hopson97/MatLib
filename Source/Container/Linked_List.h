@@ -1,7 +1,11 @@
 #ifndef DOUBLE_LINKED_LIST_H_INCLUDED
 #define DOUBLE_LINKED_LIST_H_INCLUDED
 
-namespace MatLib {
+#include <cstdlib>
+#include <utility>
+
+namespace MatLib
+{
 
 template <typename T>
 class Linked_List
@@ -108,8 +112,10 @@ class Linked_List
                 delete temp;
                 return;
             }
-            if ( conductor->next ) conductor->next->prev = conductor->prev;
-            if ( conductor->prev ) conductor->prev->next = conductor->next;
+            if ( conductor->next )
+                conductor->next->prev = conductor->prev;
+            if ( conductor->prev )
+                conductor->prev->next = conductor->next;
 
             delete conductor;
             decreaseNodeCount();
@@ -117,15 +123,7 @@ class Linked_List
 
         void addToBack (T& data)
         {
-            Node* node = new Node(data);
-
-            if (try_insert_if_empty(node)) return;
-
-            m_last->next = node;
-            node->prev = m_last;
-            m_last = node;
-
-            increaseNodeCount();
+            add(data);
         }
 
         template <typename... Args>
