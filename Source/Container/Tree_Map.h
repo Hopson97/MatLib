@@ -38,17 +38,22 @@ namespace MatLib
             template<typename... Args>
             void insert(Key key, Args&&... args)
             {
-
+                insert(&m_root, key, std::forward<Args>(args)...);
             }
 
             Value& get(Key key)
             {
-                return get(m_root, key);
+                return getNode(m_root, key)->value;
             }
 
-            void erase(const Key& key)
+            void erase(Key key)
             {
 
+            }
+
+            void clear()
+            {
+                destroy(m_root);
             }
 
             uint64_t getSize() const
@@ -69,40 +74,42 @@ namespace MatLib
 
             //Search the tree until a node is found with the same key as
             //the one passed into the function
-            Value& get(Node* node, Key key)
+            Node* getNode(Node* base, Key key)
             {
-                if (node->key == key)
+                //std::cout << key << " " << base->key << std::endl;
+                if (base->key == key)
                 {
-                    return node->value;
+                    return base;
                 }
-                else if (key < node->key)
+                else if (key < base->key)
                 {
-                    get(node->left, key);
+                    getNode(base->left, key);
                 }
-                else if (key > node->key)
+                else
                 {
-                    get(node->right, key);
+                    getNode(base->right, key);
                 }
             }
 
             //Insert
             template<typename... Args>
-            void insert(Node** node, Key key, Args&&... args)
+            void insert(Node** base, Key key, Args&&... args)
             {
-                if (!*node)  //Node is null? Create a node.
+                if (!*base)  //Node is null? Create a node.
                 {
-                    *node = new Node(key, std::forward<Args>(args)...);
+                    *base = new Node(key, std::forward<Args>(args)...);
                     m_size++;
                 }
-                else if (key < (*node)->key)  //Else, we must search the tree until a node is found to be null in order to insert
+                else if (key < (*base)->key)  //Else, we must search the tree until a node is found to be null in order to insert
                 {
-                    insert(&(*node)->left, key, std::forward<Args>(args)...);
+                    insert(&(*base)->left, key, std::forward<Args>(args)...);
                 }
                 else
                 {
-                    insert(&(*node)->right, key, std::forward<Args>(args)...);
+                    insert(&(*base)->right, key, std::forward<Args>(args)...);
                 }
             }
+
 
             Node* m_root = nullptr;
             uint64_t m_size = 0;
