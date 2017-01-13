@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <iostream>
 
+//This is a non-self balancing tree.
+//So it is very simple and not very good, but it is my first tree I have made
 namespace MatLib
 {
     template<typename Key, typename Value>

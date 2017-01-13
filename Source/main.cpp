@@ -1,33 +1,31 @@
 #include "Container/Linked_List.h"
 #include "Container/Vector.h"
 #include "Container/Tree_Map.h"
+#include "Container/Array.h"
 #include "System/Clock.h"
 
 #include <map>
 #include <cstdlib>
+#include <vector>
+
+#include <cstdlib>
+#include <ctime>
+
+int getRandomInteger(int low, int high)
+{
+    return rand() % (high - low + 1) + low;
+}
+
+class Integer
+{
+public:
+    int i = 0;
+    Integer(int i){ this->i = i; }
+};
 
 int main()
 {
-    MatLib::Tree_Map<int, std::string> tree;
-    std::map<int, std::string> tree2;
-
-    int itrs = 10000;
-
-    MatLib::Clock clockMat;
-    for (int i = 0 ; i < itrs ;i++)
-    {
-        tree.insert(i, "Test");
-        tree.get(i);
-    }
-    std::cout << clockMat.getElapsedTime() << std::endl;
-
-    MatLib::Clock clockStd;
-    for (int i = 0 ; i < itrs ;i++)
-    {
-        tree2.insert(std::make_pair(i, "Test"));
-        tree2.at(i);
-    }
-    std::cout << clockStd.getElapsedTime() << std::endl;
+    MatLib::Heap_Array<Integer, 5353> arrayOfMine (5);
 
     return EXIT_SUCCESS;
 }
