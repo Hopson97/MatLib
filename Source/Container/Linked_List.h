@@ -123,11 +123,26 @@ class Linked_List
 
         void push_back (T& data)
         {
-            addToBack(std::move(data));
+            emplace_back(std::move(data));
+        }
+
+        void push_front(T& data)
+        {
+            emplace_front(std::move(data));
+        }
+
+        void push_back (T data)
+        {
+            emplace_back(std::move(data));
+        }
+
+        void push_front(T data)
+        {
+            emplace_front(std::move(data));
         }
 
         template <typename... Args>
-        void push_back ( Args&&... data )
+        void emplace_back ( Args&&... data )
         {
             Node* node = new Node( std::forward<Args>(data)... );
 
@@ -141,7 +156,7 @@ class Linked_List
         }
 
         template <typename... Args>
-        void push_front (Args&&... data)
+        void emplace_front (Args&&... data)
         {
             Node* node = new Node( std::forward<Args>(data)... );
 

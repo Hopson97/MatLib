@@ -11,12 +11,17 @@
 #include <cstdlib>
 #include <ctime>
 
+struct Object
+{
+    Object(int x, int y) {}
+};
+
 int main()
 {
-    MatLib::Linked_List<int> list;
+    MatLib::Linked_List<Object> list;
 
     for (int i = 0 ; i < 50 ; i++ )
     {
-        list.addToBack(i);
+        list.emplace_back(5, 5);
     }
 }
