@@ -129,7 +129,7 @@ class Linked_List
             {
                 Node* temp = conductor;
                 m_first = temp->next;
-                decreaseNodeCount();
+                m_count--;
                 delete temp;
                 return;
             }
@@ -137,7 +137,7 @@ class Linked_List
             {
                 Node* temp = conductor;
                 m_last = temp->prev;
-                decreaseNodeCount();
+                m_count--;
                 delete temp;
                 return;
             }
@@ -147,27 +147,27 @@ class Linked_List
                 conductor->prev->next = conductor->next;
 
             delete conductor;
-            decreaseNodeCount();
+            m_count--;
         }
 
-        void push_back (T& data)
+        void push_back (const T& data)
         {
-            emplace_back(std::move(data));
+            emplace_back(data);
         }
 
-        void push_front(T& data)
+        void push_front(const T& data)
         {
-            emplace_front(std::move(data));
+            emplace_front(data);
         }
 
-        void push_back (T data)
+        void push_back (const T&& data)
         {
-            emplace_back(std::move(data));
+            emplace_back(data);
         }
 
-        void push_front(T data)
+        void push_front(const T&& data)
         {
-            emplace_front(std::move(data));
+            emplace_front(data);
         }
 
         template <typename... Args>
@@ -181,7 +181,7 @@ class Linked_List
             node->prev = m_last;
             m_last = node;
 
-            increaseNodeCount();
+            m_count++;
         }
 
         template <typename... Args>
@@ -195,7 +195,7 @@ class Linked_List
             node->next = m_first;
             m_first = node;
 
-            increaseNodeCount();
+            m_count++;
         }
 
         bool empty ()
@@ -227,7 +227,17 @@ class Linked_List
             return m_last->data;
         }
 
-        std::size_t size ()
+        T& front ()
+        {
+            return m_first->data;
+        }
+
+        T& back ()
+        {
+            return m_last->data;
+        }
+
+        std::size_t size () const
         {
             return m_count;
         }
@@ -253,16 +263,6 @@ class Linked_List
                 return true;
             }
             return false;
-        }
-
-        void increaseNodeCount ()
-        {
-            m_count++;
-        }
-
-        void decreaseNodeCount ()
-        {
-            m_count--;
         }
 
         Node* getToNode (size_t where)

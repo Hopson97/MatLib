@@ -20,10 +20,7 @@ int main()
 {
     MatLib::Linked_List<int> list;
 
-    for (int i = 0 ; i < 50 ; i++ )
-    {
-        list.emplace_back(i);
-    }
+    list.push_back(5);
 /*
     for (auto it = list.begin() ; it != list.end() ; it++)
     {
