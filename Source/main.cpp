@@ -11,21 +11,12 @@
 #include <cstdlib>
 #include <ctime>
 
-int getRandomInteger(int low, int high)
-{
-    return rand() % (high - low + 1) + low;
-}
-
-class Integer
-{
-public:
-    int i = 0;
-    Integer(int i){ this->i = i; }
-};
-
 int main()
 {
-    MatLib::Heap_Array<Integer, 5353> arrayOfMine (5);
+    MatLib::Linked_List<int> list;
 
-    return EXIT_SUCCESS;
+    for (int i = 0 ; i < 50 ; i++ )
+    {
+        list.addToBack(i);
+    }
 }

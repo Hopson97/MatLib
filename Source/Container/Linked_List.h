@@ -121,17 +121,17 @@ class Linked_List
             decreaseNodeCount();
         }
 
-        void addToBack (T& data)
+        void push_back (T& data)
         {
-            add(data);
+            addToBack(std::move(data));
         }
 
         template <typename... Args>
-        void addToBack ( Args&&... data )
+        void push_back ( Args&&... data )
         {
             Node* node = new Node( std::forward<Args>(data)... );
 
-            if (try_insert_if_empty( node ) ) return;
+            if (tryInsertIfEmpty( node ) ) return;
 
             m_last->next = node;
             node->prev = m_last;
@@ -141,7 +141,7 @@ class Linked_List
         }
 
         template <typename... Args>
-        void addToFront (Args&&... data)
+        void push_front (Args&&... data)
         {
             Node* node = new Node( std::forward<Args>(data)... );
 
@@ -166,19 +166,9 @@ class Linked_List
             return conductor->data;
         }
 
-        T& begin ()
+        const T& operator [] (const size_t where) const
         {
-            return m_first->data;
-        }
-
-        T&  end ()
-        {
-            return m_last->data;
-        }
-
-        const T& operator [] ( const size_t where ) const
-        {
-            Node* conductor = getToNode( where );
+            Node* conductor = getToNode(where);
 
             return conductor->data;
         }
@@ -247,7 +237,6 @@ class Linked_List
             return conductor;
         }
 };
-
 
 }//Namespace MatLib
 
