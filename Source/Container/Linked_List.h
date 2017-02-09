@@ -29,6 +29,35 @@ class Linked_List
     };
 
     public:
+        class Iterator
+        {
+            public:
+                Iterator(Node* node)
+                :   m_node      (node)
+                { }
+
+
+                friend bool operator!=(typename Linked_List<T>::Iterator left, typename Linked_List<T>::Iterator right)
+                {
+                    return left.m_node != right.m_node;
+                }
+
+                T& operator *() const
+                {
+                    return m_node->data;
+                }
+
+                Iterator& operator++()
+                {
+                    m_node = m_node->next;
+                    return *this;
+                }
+
+            private:
+                Node* m_node;
+            };
+
+
         //Default
         Linked_List () = default;
 
@@ -201,6 +230,16 @@ class Linked_List
         std::size_t size ()
         {
             return m_count;
+        }
+
+        Iterator begin()
+        {
+            return {m_first};
+        }
+
+        Iterator end()
+        {
+            return {nullptr};
         }
 
     private:

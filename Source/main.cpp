@@ -18,10 +18,20 @@ struct Object
 
 int main()
 {
-    MatLib::Linked_List<Object> list;
+    MatLib::Linked_List<int> list;
 
     for (int i = 0 ; i < 50 ; i++ )
     {
-        list.emplace_back(5, 5);
+        list.emplace_back(i);
+    }
+/*
+    for (auto it = list.begin() ; it != list.end() ; it++)
+    {
+        std::cout << *it << std::endl;
+    }
+    */
+    for (auto& i : list)
+    {
+        std::cout << i << std::endl;
     }
 }
