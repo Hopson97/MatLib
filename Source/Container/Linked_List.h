@@ -31,30 +31,60 @@ class Linked_List
     public:
         class Iterator
         {
+            friend class Linked_List;
+
             public:
                 Iterator(Node* node)
-                :   m_node      (node)
+                :   node      (node)
                 { }
 
 
                 friend bool operator!=(typename Linked_List<T>::Iterator left, typename Linked_List<T>::Iterator right)
                 {
-                    return left.m_node != right.m_node;
+                    return left.node != right.node;
                 }
 
                 T& operator *() const
                 {
-                    return m_node->data;
+                    return node->data;
                 }
 
                 Iterator& operator++()
                 {
-                    m_node = m_node->next;
+                    node = node->next;
+                    return *this;
+                }
+
+                Iterator& operator++(int)
+                {
+                    node = node->next;
+                    return *this;
+                }
+
+                Iterator& operator--()
+                {
+                    node = node->prev;
+                    return *this;
+                }
+
+                Iterator& operator--(int)
+                {
+                    node = node->prev;
+                    return *this;
+                }
+
+                Iterator& operator+ (int x)
+                {
+                    for (int i = 0 ; i < x ; i++)
+                    {
+                        node = node->next;
+                    }
+
                     return *this;
                 }
 
             private:
-                Node* m_node;
+                Node* node;
             };
 
 
@@ -118,35 +148,38 @@ class Linked_List
 
         void clear ()
         {
-            while (!empty()) erase(0);
+            while (!empty())
+                erase(begin());
         }
 
-        void erase (const size_t where)
+        void erase (Iterator it)
         {
-            Node* conductor = getToNode( where);
-
-            if ( where == 0 )
+            if (it.node == m_first)
             {
-                Node* temp = conductor;
+                Node* temp = it.node;
+
                 m_first = temp->next;
                 m_count--;
+
                 delete temp;
                 return;
             }
-            if ( where == m_count - 1 )
+            if (it.node == m_last)
             {
-                Node* temp = conductor;
+                Node* temp = m_last;
+
                 m_last = temp->prev;
                 m_count--;
+
                 delete temp;
                 return;
             }
-            if ( conductor->next )
-                conductor->next->prev = conductor->prev;
-            if ( conductor->prev )
-                conductor->prev->next = conductor->next;
+            if ( it.node->next )
+                it.node->next->prev = it.node->prev;
+            if ( it.node->prev )
+                it.node->prev->next = it.node->next;
 
-            delete conductor;
+            delete it.node;
             m_count--;
         }
 
@@ -198,12 +231,22 @@ class Linked_List
             m_count++;
         }
 
+        void insert(Iterator iterator, T&& value)
+        {
+
+        }
+
+        void insert(Iterator iterator, T& value)
+        {
+
+        }
+
         bool empty ()
         {
             return m_count == 0;
         }
-
-        T&  operator [] ( const size_t where )
+/*
+        T&  operator [] (const size_t where)
         {
             Node* conductor = getToNode( where );
 
@@ -216,43 +259,33 @@ class Linked_List
 
             return conductor->data;
         }
+*/
+        const T& front  () const    { return m_first->data; }
 
-        const T& front () const
-        {
-            return m_first->data;
-        }
+        const T& back   () const    { return m_last->data;}
 
-        const T& back () const
-        {
-            return m_last->data;
-        }
 
-        T& front ()
-        {
-            return m_first->data;
-        }
+        T& front    ()  { return m_first->data; }
 
-        T& back ()
-        {
-            return m_last->data;
-        }
+        T& back     ()  { return m_last->data; }
 
-        std::size_t size () const
-        {
-            return m_count;
-        }
 
-        Iterator begin()
-        {
-            return {m_first};
-        }
+        Iterator begin  ()  { return {m_first}; }
 
-        Iterator end()
-        {
-            return {nullptr};
-        }
+        Iterator end    ()  { return {nullptr}; }
+
+        std::size_t size () const { return m_count; }
 
     private:
+/*
+        void erase(Node** nodeToErase, Node* node)
+        {
+            Node** temp = nodeToErase;
+
+            node
+        }
+*/
+
         bool tryInsertIfEmpty (Node* node)
         {
             if (empty())
@@ -263,32 +296,6 @@ class Linked_List
                 return true;
             }
             return false;
-        }
-
-        Node* getToNode (size_t where)
-        {
-            Node* conductor = nullptr;
-
-            if (where <= m_count / 2)
-            {
-                conductor = m_first;
-                for (size_t i = 0 ; i < where ; i ++)
-                {
-                    conductor = conductor->next;
-                }
-            }
-            else
-            {
-                where = m_count - where;
-                conductor = m_last;
-                for (size_t i = 0 ; i < where - 1 ; i ++)
-                {
-                    conductor = conductor->prev;
-                }
-            }
-
-
-            return conductor;
         }
 };
 

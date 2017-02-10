@@ -24,11 +24,6 @@ namespace MatLib
                 testForDel();
             };
 
-            explicit operator bool()
-            {
-                return m_pointer;
-            }
-
             Shared_Pointer& operator =(Shared_Pointer other)
             {
                 testForDel();
@@ -37,28 +32,17 @@ namespace MatLib
                 return *this;
             }
 
-            T& operator *()
-            {
-                return *m_pointer;
-            }
+            T& operator *   () { return *m_pointer; }
 
-            T& operator ->()
-            {
-                return *m_pointer;
-            }
+            T& operator ->  () { return *m_pointer; }
 
 
-            T* get()
-            {
-                return m_pointer;
-            }
+            int getReferenceCount   () { return *m_refCount; }
+
+            explicit operator bool  () { return m_pointer;   }
 
 
-
-            int getReferenceCount()
-            {
-                return *m_refCount;
-            }
+           T* get() { return m_pointer; }
 
 
         private:
@@ -77,7 +61,7 @@ namespace MatLib
 
 
 
-            T*      m_pointer      = nullptr;
+            T*      m_pointer   = nullptr;
             int*    m_refCount  = nullptr;
     };
 

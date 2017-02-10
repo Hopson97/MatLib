@@ -35,26 +35,13 @@ namespace MatLib
                 delete m_pointer;
             }
 
-            explicit operator bool()
-            {
-                return m_pointer;
-            }
+            explicit operator bool() { return m_pointer; }
 
-            T& operator *()
-            {
-                return *m_pointer;
-            }
+            T& operator *()  { return *m_pointer; }
 
-            T& operator ->()
-            {
-                return *m_pointer;
-            }
+            T& operator ->() { return *m_pointer; }
 
-
-            T* get()
-            {
-                return m_pointer;
-            }
+            T* get() { return m_pointer; }
 
         private:
             T* m_pointer = nullptr;

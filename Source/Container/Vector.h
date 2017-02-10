@@ -76,7 +76,14 @@ class Vector
             m_size = 0;
         }
 
-        void addToBack(T& data)
+        void push_back(T& data)
+        {
+            if (m_size >= m_maxSize) doubleSize();
+            new (m_p_data + m_size) T (data);
+            m_size++;
+        }
+
+        void push_back(T&& data)
         {
             if (m_size >= m_maxSize) doubleSize();
             new (m_p_data + m_size) T (data);
@@ -84,41 +91,29 @@ class Vector
         }
 
         template<typename... Args>
-        void addToBack (Args&&... args)
+        void emplace_back (Args&&... args)
         {
             if ( m_size >= m_maxSize) doubleSize();
             new (m_p_data + m_size) T (std::forward<Args>(args)...);
             m_size++;
         }
 
-        size_t getSize () const
-        {
-            return m_size;
-        }
+        size_t size () const { return m_size; }
 
-        T& operator []( size_t index )
-        {
-            return get(index);
-        }
 
-        const T& operator [](size_t index) const
-        {
-            return get(index);
-        }
+        T&       operator [] (size_t index)       { return get(index); }
 
-        T& get(size_t index)
-        {
-            return m_p_data[index];
-        }
+        const T& operator [] (size_t index) const { return get(index); }
 
-        const T& get(size_t index) const
-        {
-            return m_p_data[index];
-        }
+
+        T& get       (size_t index)       { return m_p_data[index]; }
+
+        const T& get (size_t index) const { return m_p_data[index]; }
 
     private:
+
         void doubleSize()
-        {
+        {/*
             if ( m_size == 0 ) m_maxSize = 1;
             else
             {
@@ -129,13 +124,13 @@ class Vector
 
             for (size_t i = 0 ; i < m_size ; i++)
             {
-                new (newArray + i) T(std::move(m_p_data[i]));
+                new (newArray + i) T(m_p_data[i]);
                 m_p_data[i].~T();
             }
 
             free (m_p_data);
             m_p_data = nullptr;
-            m_p_data = newArray;
+            m_p_data = newArray;*/
         }
 
 

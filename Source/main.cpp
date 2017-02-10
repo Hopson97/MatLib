@@ -1,15 +1,6 @@
 #include "Container/Linked_List.h"
-#include "Container/Vector.h"
-#include "Container/Tree_Map.h"
-#include "Container/Array.h"
-#include "System/Clock.h"
 
-#include <map>
-#include <cstdlib>
-#include <vector>
-
-#include <cstdlib>
-#include <ctime>
+#include <iostream>
 
 struct Object
 {
@@ -20,15 +11,23 @@ int main()
 {
     MatLib::Linked_List<int> list;
 
-    list.push_back(5);
+    for (int i = 0 ; i < 5 ; i++)
+    {
+        list.push_back(i);
+    }
+
+    //list.erase(list.begin() + 3);
 /*
     for (auto it = list.begin() ; it != list.end() ; it++)
     {
-        std::cout << *it << std::endl;
+        std::cout << *it << "\n";
     }
-    */
+
     for (auto& i : list)
     {
-        std::cout << i << std::endl;
+        std::cout << i << "\n";
     }
+*/
+    std::cout << "\nSuccess! Press anything to continue\n" << std::endl;
+    std::cin.ignore();
 }
