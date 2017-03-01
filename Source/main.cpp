@@ -1,38 +1,22 @@
-#include "Container/Linked_List.h"
+
 #include "Utilities/Utilities.h"
+#include "Container/Array.h"
 
 #include <iostream>
 
 int main()
 {
-    MatLib::Linked_List<int> list;
-    MatLib::Linked_List<int> list2;
+/*
+    MatLib::Array<int, 5> arr;
 
-    for (int i = 0 ; i < 5 ; i++)
+    for (int i = 0; i < 5; i++)
     {
-       list.push_back(i);
+        arr[i] = 5;
     }
 
-    for (int i = 5 ; i > 0 ; i--)
+    for(auto i : arr)
     {
-        list2.push_back(i);
+        std::cout << i << std::endl;
     }
-
-
-    for (auto& i : list)
-    {
-        std::cout << i << "\n";
-    }
-
-    /MatLib::swap(list, list2);
-
-    std::cout << "\n";
-
-    for (auto& i : list2)
-    {
-        std::cout << i << "\n";
-    }
-
-    std::cout << "\nSuccess! Press anything to continue\n" << std::endl;
-    std::cin.ignore();
+*/
 }

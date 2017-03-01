@@ -1,5 +1,5 @@
 #include "String.h"
-
+/*
 namespace MatLib
 {
     String& String::operator=(const String& other)
@@ -8,7 +8,7 @@ namespace MatLib
         return *this;
     }
 
-    String::String(char* str)
+    String::String(const char* str)
     :   m_string (str)
     {
 
@@ -25,3 +25,4 @@ namespace MatLib
         return stream;
     }
 }
+*/

@@ -100,20 +100,13 @@ class Vector
 
         size_t size () const { return m_size; }
 
-
-        T&       operator [] (size_t index)       { return get(index); }
-
-        const T& operator [] (size_t index) const { return get(index); }
-
-
         T& get       (size_t index)       { return m_p_data[index]; }
-
         const T& get (size_t index) const { return m_p_data[index]; }
 
     private:
 
         void doubleSize()
-        {/*
+        {
             if ( m_size == 0 ) m_maxSize = 1;
             else
             {
@@ -130,7 +123,7 @@ class Vector
 
             free (m_p_data);
             m_p_data = nullptr;
-            m_p_data = newArray;*/
+            m_p_data = newArray;
         }
 
 
