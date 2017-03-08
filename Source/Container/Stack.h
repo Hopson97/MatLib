@@ -1,7 +1,7 @@
 #ifndef STACK_H_INCLUDED
 #define STACK_H_INCLUDED
 
-#include <Vector.h>
+#include "Vector.h"
 
 namespace MatLib
 {
@@ -16,7 +16,12 @@ namespace MatLib
 
             void pop()
             {
-                m_stack.
+                m_stack.erase(m_stack.size() - 1);
+            }
+
+            T& top()
+            {
+                return m_stack.get(m_stack.size() - 1);
             }
 
         private:
